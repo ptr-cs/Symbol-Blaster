@@ -1,0 +1,429 @@
+﻿  <UserControl x:Class="SymbolBlaster.UI.Controls.ColorSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SymbolBlaster.UI.Controls"
+             xmlns:validators="clr-namespace:SymbolBlaster.UI.Validators"
+             x:Name="colorSelector"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/SymbolBlaster;component/UI/Resources/StyleResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#2c3e50" DataContext="{Binding ElementName=colorSelector}">
+        <StackPanel Orientation="Vertical">
+            <DockPanel Background="#34495e"
+                       Height="32"
+                       FlowDirection="RightToLeft">
+                <Button Style="{StaticResource ButtonStyle1}"
+                        x:Name="closeColorSelectorPopupButton"
+                        Click="CloseColorSelector"
+                        Width="32"
+                        Height="32"
+                        HorizontalAlignment="Right"
+                        Background="#e74c3c"
+                        Foreground="White">
+                    <Button.Tag>
+                        <CornerRadius>0</CornerRadius>
+                    </Button.Tag>
+                    <TextBlock Text="X"
+                               FontWeight="Bold" />
+                </Button>
+                <TextBlock Text="Choose A Color"
+                           HorizontalAlignment="Center"
+                           Margin="8,-4,8,0"
+                           Style="{StaticResource MenuSectionHeader}"
+                           Foreground="White" />
+
+            </DockPanel>
+            <ListBox 
+                x:Name="presetColors"
+                Style="{StaticResource ListBoxStyle1}" 
+                ItemsSource="{Binding Path=PresetColors, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Padding="0"
+                BorderThickness="0"
+                Margin="-1,0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type Color}">
+                        <Button Style="{StaticResource ColorSelectorButtonStyle}"
+                                Width="Auto"
+                                Height="24"
+                                Command="{Binding ElementName=colorSelector, Path=SelectColor}"
+                                CommandParameter="{Binding}">
+                            <Button.Resources>
+                                <SolidColorBrush x:Key="BackgroundBrush"
+                                                 Color="{Binding}" />
+                            </Button.Resources>
+                            <Button.Background>
+                                <StaticResource ResourceKey="BackgroundBrush" />
+                            </Button.Background>
+                            <Button.Tag>
+                                <CornerRadius>0</CornerRadius>
+                            </Button.Tag>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}"
+                           BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="Padding"
+                                Value="0" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                        <Setter Property="Margin"
+                                Value="0" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <TextBlock Text="Custom:"
+                       Style="{StaticResource buttonText}"
+                       HorizontalAlignment="Left"
+                       Margin="8,4" />
+            <DockPanel Margin="0,0,0,4">
+                <TextBlock Text="Hex"
+                           Style="{StaticResource buttonText}"
+                           Margin="8,0,4,0" />
+                <TextBox Height="24"
+                         BorderThickness="0"
+                         FontFamily="Segoe Ui"
+                         Foreground="#333"
+                         FontWeight="DemiBold"
+                         FontSize="13"
+                         Padding="2,0,2,0"
+                         MaxLength="9"
+                         x:Name="customRgbTextBox"
+                         PreviewKeyDown="CustomRgbTextBox_PreviewKeyDown"
+                         VerticalContentAlignment="Center"
+                         Validation.ErrorTemplate="{StaticResource textBoxErrorTemplateAdornRight}">
+                    <TextBox.Text>
+                        <Binding Path="HexValueTextBox"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validators:ArgbHexadecimalColorStringValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin"
+                                    Value="0,0,8,0" />
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError"
+                                         Value="True">
+                                    <Setter Property="Margin"
+                                            Value="0,0,40,0" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+            </DockPanel>
+            <Grid Margin="0,0,0,4">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}"
+                           BasedOn="{StaticResource buttonText}">
+                        <Setter Property="Margin"
+                                Value="8,0,4,0" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Width"
+                                Value="32" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                        <Setter Property="Foreground"
+                                Value="#333" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="FontFamily"
+                                Value="Segoe Ui" />
+                        <Setter Property="FontWeight"
+                                Value="DemiBold" />
+                        <Setter Property="FontSize"
+                                Value="13" />
+                        <Setter Property="Margin"
+                                Value="0,4,8,4" />
+                        <Setter Property="Validation.ErrorTemplate"
+                                Value="{StaticResource textBoxErrorTemplateAdornLeft}" />
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError"
+                                     Value="True">
+                                <Setter Property="Margin"
+                                        Value="32,4,8,4" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="{x:Type Slider}"
+                           BasedOn="{StaticResource SliderStyle1}">
+                        <Setter Property="Minimum"
+                                Value="0" />
+                        <Setter Property="Maximum"
+                                Value="255" />
+                        <Setter Property="TickFrequency"
+                                Value="1" />
+                        <Setter Property="Delay"
+                                Value="0" />
+                        <Setter Property="IsMoveToPointEnabled"
+                                Value="False" />
+                        <Setter Property="Interval"
+                                Value="1" />
+                        <Setter Property="IsSnapToTickEnabled"
+                                Value="True" />
+                        <Setter Property="Margin"
+                                Value="0,4,8,4" />
+                        <Setter Property="Height"
+                                Value="24" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="A" />
+                    <Border Grid.Column="1"
+                            Margin="0,4,8,4"
+                            Height="24"
+                            BorderThickness="0"
+                            IsHitTestVisible="False"
+                            Background="{StaticResource checkeredBrush}" />
+                    <Slider Grid.Column="1"
+                            x:Name="aSlider"
+                            Value="{Binding AValueSlider, Mode=TwoWay}">
+                        <Slider.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="1"
+                                              Color="#000000" />
+                                <GradientStop Offset="0"
+                                              Color="#00000000" />
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                    <TextBox Grid.Column="2"
+                             MaxLength="3"
+                             x:Name="aValueTextBox">
+                        <TextBox.Text>
+                            <Binding Path="AValueTextBox"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validators:ColorByteStringValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="R" />
+                    <Slider Grid.Column="1"
+                            x:Name="rSlider"
+                            Value="{Binding RValueSlider, Mode=TwoWay}">
+                        <Slider.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0"
+                                              Color="#000000" />
+                                <GradientStop Offset="1"
+                                              Color="#ff0000" />
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                    <TextBox Grid.Column="2"
+                             MaxLength="3"
+                             x:Name="rValueTextBox">
+                        <TextBox.Text>
+                            <Binding Path="RValueTextBox"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validators:ColorByteStringValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="G" />
+                    <Slider Grid.Column="1"
+                            x:Name="gSlider"
+                            Value="{Binding GValueSlider, Mode=TwoWay}">
+                        <Slider.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0"
+                                              Color="#000000" />
+                                <GradientStop Offset="1"
+                                              Color="#00ff00" />
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                    <TextBox Grid.Column="2"
+                             MaxLength="3"
+                             x:Name="gValueTextBox">
+                        <TextBox.Text>
+                            <Binding Path="GValueTextBox"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validators:ColorByteStringValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="B" />
+                    <Slider Grid.Column="1"
+                            x:Name="bSlider"
+                            Value="{Binding BValueSlider, Mode=TwoWay}">
+                        <Slider.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0"
+                                              Color="#000000" />
+                                <GradientStop Offset="1"
+                                              Color="#0000ff" />
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                    <TextBox Grid.Column="2"
+                             MaxLength="3"
+                             x:Name="bValueTextBox">
+                        <TextBox.Text>
+                            <Binding Path="BValueTextBox"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validators:ColorByteStringValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+            </Grid>
+            <UniformGrid Rows="1"
+                         Columns="2"
+                         Margin="0,0,0,8">
+                <Border BorderThickness="0"
+                        Height="32"
+                        SnapsToDevicePixels="True"
+                        Margin="8,0,8,0"
+                        Background="{StaticResource checkeredBrush}">
+                    <Button Style="{StaticResource ColorSelectorButtonStyle}"
+                            Command="{Binding ElementName=colorSelector, Path=SelectColor}"
+                            CommandParameter="{Binding ElementName=colorSelector, Path=CurrentColor}"
+                            Width="Auto"
+                            Click="CloseColorSelector">
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="BackgroundBrush"
+                                             Color="{Binding CurrentColor, Mode=OneWay}" />
+                        </Button.Resources>
+                        <Button.Background>
+                            <StaticResource ResourceKey="BackgroundBrush" />
+                        </Button.Background>
+                        <Button.Tag>
+                            <CornerRadius>0</CornerRadius>
+                        </Button.Tag>
+                    </Button>
+                </Border>
+                <Button Style="{StaticResource ButtonStyle1}"
+                        Command="{Binding ElementName=colorSelector, Path=AddCustomColor}"
+                        Width="Auto"
+                        Margin="0,0,8,0">
+                    <TextBlock Text="Add 🡇"
+                               TextAlignment="Center"
+                               Style="{StaticResource buttonText}" />
+
+                </Button>
+            </UniformGrid>
+
+            <ListBox 
+                Style="{StaticResource ListBoxStyle1}" 
+                ItemsSource="{Binding Path=CustomColors, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Padding="0"
+                BorderThickness="0"
+                Margin="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type Color}">
+                        <Border Background="{StaticResource checkeredBrush}">
+                            <Button Style="{StaticResource ColorSelectorButtonStyle}"
+                                    Command="{Binding ElementName=colorSelector, Path=SelectColor}"
+                                    CommandParameter="{Binding}"
+                                    Width="Auto"
+                                    Height="24">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="BackgroundBrush"
+                                                     Color="{Binding}" />
+                                </Button.Resources>
+                                <Button.Background>
+                                    <StaticResource ResourceKey="BackgroundBrush" />
+                                </Button.Background>
+                                <Button.Tag>
+                                    <CornerRadius>0</CornerRadius>
+                                </Button.Tag>
+                            </Button>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="Padding"
+                                Value="0" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                        <Setter Property="Margin"
+                                Value="0" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>
