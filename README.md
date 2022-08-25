@@ -4,8 +4,12 @@ Game with modern user interface (UI) inspired by retro arcade cabinets. Written 
 ![Symbol Blaster - prototype](/media/symbol_blaster_prototype.gif "Symbol Blaster - prototype")
 
 # Summary
-Symbol Blaster features a Model-View-ViewModel (M-V-VM) architecture to implement the UI and game world. A MainViewModel governs the state and behavior of the UI, while a GameViewModel governs the state and behavior of the game. The eXtensible Application Markup Language (XAML) code that defines the "skeleton" of the UI incorporates the ViewModel logic through various data-bindings that enable the user to influence application state. Since the UI navigation topology is fixed at compile time, navigation is handled by a simple TabControl populated with TabItems that contain collapsible sections. Both the front-end XAML and the back-end ViewModel components are modular in order to foster development efficiency and easier maintenance. NUnit is the unit testing framework used to conduct automated testing of the application
+> Inspired by retro arcade game mechanics and visuals, Symbol Blaster is an old-school, 2-D shooter game with modern twists. Whereas many games from the "Golden Age" of arcade systems featured static, pre-defined game object geometries, Symbol Blaster allows the player to customize the geometries and colors of all major game objects ("Sprites") in real-time. Changing the geometry of a Sprite in Symbol Blaster also changes that Sprite's underlying hit-test geometry, resulting in subtle game-play variations based on the sizes and shapes of customized Sprites.
+
 ![Symbol Blaster - overview](/media/symbol_blaster_overview.gif "Symbol Blaster - overview")
+
+# How It Works
+> Symbol Blaster features a Model-View-ViewModel (M-V-VM) architecture to implement the UI and game world. A MainViewModel governs the state and behavior of the UI, while a GameViewModel governs the state and behavior of the game. The eXtensible Application Markup Language (XAML) code that defines the "skeleton" of the UI incorporates the ViewModel logic through various data-bindings that enable the user to influence application state. Since the UI navigation topology is fixed at compile time, navigation is handled by a simple TabControl populated with TabItems that contain collapsible sections. Both the front-end XAML and the back-end ViewModel components are modular in order to foster development efficiency and easier maintenance. NUnit is the unit testing framework used to conduct automated testing of the application.
 
 # Features
 - Modern "flat" UI prototyped in Adobe XD and implemented in XAML
@@ -20,9 +24,16 @@ Symbol Blaster features a Model-View-ViewModel (M-V-VM) architecture to implemen
 - Unit tested with NUnit
 
 # Screenshots
+## Adobe XD Artboards
 ![Symbol Blaster - artboards](/media/symbol_blaster_artboards.gif "Symbol Blaster - artboards")
-![Symbol Blaster - color selector](/media/symbol_blaster_color_selector.gif "Symbol Blaster - color selector")
+## Comparison of Adobe XD prototype UI (left) with XAML implementation (right)
 ![Symbol Blaster - comparison](/media/symbol_blaster_comparison.gif "Symbol Blaster - comparison")
-![Symbol Blaster - game objects](/media/symbol_blaster_game_objects.gif "Symbol Blaster - game objects")
-![Symbol Blaster - presets](/media/symbol_blaster_presets.gif "Symbol Blaster - presets")
+## Game Object Sprite Selector
 ![Symbol Blaster - sprites](/media/symbol_blaster_sprites.gif "Symbol Blaster - sprites")
+## Color Selector UserControl
+![Symbol Blaster - color selector](/media/symbol_blaster_color_selector.gif "Symbol Blaster - color selector")
+## Game Objects
+![Symbol Blaster - game objects](/media/symbol_blaster_game_objects.gif "Symbol Blaster - game objects")
+## Configuration Presets
+![Symbol Blaster - presets](/media/symbol_blaster_presets.gif "Symbol Blaster - presets")
+![Symbol Blaster - custom](/media/symbol_blaster_custom.gif "Symbol Blaster - custom")
