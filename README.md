@@ -23,6 +23,9 @@ Game with modern user interface (UI) inspired by retro arcade cabinets. Written 
 - Custom update loop rendering performed via a CompositionTarget.Rendering event handler
 - Unit tested with NUnit
 
+# Setup
+&nbsp;&nbsp;&nbsp;&nbsp;The repository consists of two Visual Studio projects - the SymbolBlaster project and an NUnit test project. Opening the SymbolBlaster/SymbolBlaster.sln file in Visual Studio should allow both projects to be built and run.
+
 # Screenshots
 ## Adobe XD Artboards
 ![Symbol Blaster - artboards](/media/symbol_blaster_artboards.gif "Symbol Blaster - artboards")
